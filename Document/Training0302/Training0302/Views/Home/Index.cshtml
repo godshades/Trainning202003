@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "Emloyee";
+
+
+}
+
+
+<div class="container">
+    <br />
+
+    <div class="form-group">
+        <label for="Loại tìm kiếm">Loại tìm kiếm</label>
+        <select class="form-control" id="typeSearch">
+            <option value="name">Họ tên</option>
+            <option value="birthday">Ngày sinh</option>
+            <option value="gender">Giới tính</option>
+            <option value="address">Địa chỉ</option>
+            <option value="age">Tuổi</option>
+        </select>
+    </div>
+    <div class="form-group show typeSearch" id="name">
+        <label for="name">Họ tên</label>
+        <input type="text" class="form-control" id="inputName" name="name">
+    </div>
+    <div class="form-group hide typeSearch" id="birthday">
+        <label for="pwd">Từ ngày</label>
+        <input type="date" class="form-control" id="startDate">
+        <label for="pwd">đến ngày</label>
+        <input type="date" class="form-control" id="endDate">
+    </div>
+    <div class="radio hide typeSearch" id="gender">
+        <label><input type="radio" name="Gender" checked>Nam</label>
+        <label><input type="radio" name="Gender">Nữ</label>
+    </div>
+    <div class="form-group hide typeSearch" id="address">
+        <label for="address">Địa chỉ</label>
+        <input type="text" class="form-control" id="address" name="address">
+    </div>
+    <div class="form-group hide typeSearch" id="age">
+        <label for="age">Tuổi</label>
+        <input type="number" class="form-control" id="age" name="age">
+    </div>
+
+
+
+
+
+
+
+    <button id="sendSearch" class="btn btn-success">Tìm kiếm</button>
+    <br />
+    <br />
+    <div id="tableList">
+        @{Html.RenderAction("_GetList", "Home");}
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#typeSearch").change(function () {
+                let selectValue = $(this).val();
+                console.log(selectValue);
+                $(".typeSearch").removeClass("show");
+                $(".typeSearch").addClass("hide");
+                $(`#${selectValue}`).removeClass("hide");
+                $(`#${selectValue}`).addClass("show");
+
+            });
+
+
+
+        });
+        $("#sendSearch").click(function () {
+            let empName = $("#inputName").val();
+
+            $.ajax({
+                type: "post",
+                url: "/Home/_GetList",
+                data: { empName: empName },                
+                success: function (response) {
+                    
+                    console.log(response)
+                    alert("aaa")
+                },
+                error: function (request, status) {
+                    console.log(request)
+                    console.log(status)
+                    
+
+                },
+            })
+        });
+    </script>
+}

@@ -1,0 +1,36 @@
+﻿@model List<Training0302.Models.Employee>
+
+
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mã nhân viên</th>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Giới tính</th>
+            <th>Địa chỉ</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Birthday</td>
+                <td>@(item.Gender == true ? "Nam" : "Nữ")</td>
+                <td>@item.Address</td>
+                <td>@item.Email</td>
+                <td>@item.Phone</td>
+
+            </tr>
+        }
+
+
+    </tbody>
+</table>

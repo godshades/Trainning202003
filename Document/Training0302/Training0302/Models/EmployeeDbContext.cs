@@ -12,17 +12,17 @@ namespace Training0302.Models
         {
         }
 
-        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<EMPLOYEE> EMPLOYEEs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Employee>()
-                .Property(e => e.Id)
-                .IsUnicode(false);
+            modelBuilder.Entity<EMPLOYEE>()
+                .Property(e => e.ID)
+                .IsFixedLength();
 
-            modelBuilder.Entity<Employee>()
-                .Property(e => e.Phone)
-                .IsUnicode(false);
+            modelBuilder.Entity<EMPLOYEE>()
+                .Property(e => e.PHONE)
+                .IsFixedLength();
         }
     }
 }

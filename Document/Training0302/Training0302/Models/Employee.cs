@@ -6,28 +6,31 @@ namespace Training0302.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Employee")]
-    public partial class Employee
+    [Table("EMPLOYEE")]
+    public partial class EMPLOYEE
     {
         [StringLength(10)]
-        public string Id { get; set; }
+        public string ID { get; set; }
+
+        [Required]
+        [StringLength(250)]
+        public string NAME { get; set; }
+
+        [Column(TypeName = "date")]
+        public DateTime BIRTHDAY { get; set; }
+
+        public bool GENDER { get; set; }
+
+        [Required]
+        [StringLength(250)]
+        public string ADDRESS { get; set; }
 
         [StringLength(250)]
-        public string Name { get; set; }
-
-        public DateTime? Birthday { get; set; }
-
-        public bool? Gender { get; set; }
-
-        [StringLength(250)]
-        public string Address { get; set; }
-
-        [StringLength(250)]
-        public string Email { get; set; }
+        public string EMAIL { get; set; }
 
         [StringLength(15)]
-        public string Phone { get; set; }
+        public string PHONE { get; set; }
 
-        public bool? Status { get; set; }
+        public bool? STATUS { get; set; }
     }
 }

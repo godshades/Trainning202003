@@ -6,61 +6,111 @@
 }
 
 
-<div class="container">
-    <br />
+    <div class="container">
+        <br />
 
-    <div class="form-group">
-        <label for="Loại tìm kiếm">Loại tìm kiếm</label>
-        <select class="form-control" id="typeSearch">
-            <option value="name">Họ tên</option>
-            <option value="birthday">Ngày sinh</option>
-            <option value="gender">Giới tính</option>
-            <option value="address">Địa chỉ</option>
-            <option value="age">Tuổi</option>
-        </select>
+        <div class="form-group">
+            <label for="Loại tìm kiếm">Loại tìm kiếm</label>
+            <select class="form-control" id="typeSearch">
+                <option value="name">Họ tên</option>
+                <option value="birthday">Ngày sinh</option>
+                <option value="gender">Giới tính</option>
+                <option value="address">Địa chỉ</option>
+                <option value="age">Tuổi</option>
+            </select>
+        </div>
+
+        <form id="form-search" action="#">
+            <div class="form-group show typeSearch" id="name">
+                <label for="name">Họ tên</label>
+                <input type="text" class="form-control" name="nameVal">
+            </div>
+            <div class="form-group hide typeSearch" id="birthday">
+                <label class="error"></label>
+                <br />
+                <label for="startDate">Từ ngày</label>
+                <input type="text" class="form-control" name="startDate" placeholder="dd/MM/yyyy">
+                <br />
+                <label for="endDate">đến ngày</label>
+                <input type="text" class="form-control" name="endDate" placeholder="dd/MM/yyyy">
+            </div>
+            <div class="radio hide typeSearch" id="gender">
+                <label><input type="radio" name="gender" value="true" checked>Nam</label>
+                <label><input type="radio" name="gender" value="false">Nữ</label>
+            </div>
+            <div class="form-group hide typeSearch" id="address">
+                <label for="address">Địa chỉ</label>
+                <input type="text" class="form-control" name="addressVal">
+            </div>
+            <div class="form-group hide typeSearch" id="age">
+                <label for="age">Tuổi</label>
+                <input type="number" class="form-control" name="ageVal">
+            </div>
+            <input type="submit" id="sendSearch" class="btn btn-success" value="Tìm kiếm" />
+        </form>
+        <br />
+        <button class="btn btn-success" id="addList">Thêm</button>
+        <button class="btn btn-success">Lưu</button>
+
+
+
+
+
+
+
+
+
+        <br />
+        <br />
+        <div id="tableList">
+            @{Html.RenderAction("_GetList", "Home");}
+        </div>
     </div>
-    <div class="form-group show typeSearch" id="name">
-        <label for="name">Họ tên</label>
-        <input type="text" class="form-control" id="inputName" name="name">
-    </div>
-    <div class="form-group hide typeSearch" id="birthday">
-        <label for="pwd">Từ ngày</label>
-        <input type="date" class="form-control" id="startDate">
-        <label for="pwd">đến ngày</label>
-        <input type="date" class="form-control" id="endDate">
-    </div>
-    <div class="radio hide typeSearch" id="gender">
-        <label><input type="radio" name="Gender" checked>Nam</label>
-        <label><input type="radio" name="Gender">Nữ</label>
-    </div>
-    <div class="form-group hide typeSearch" id="address">
-        <label for="address">Địa chỉ</label>
-        <input type="text" class="form-control" id="address" name="address">
-    </div>
-    <div class="form-group hide typeSearch" id="age">
-        <label for="age">Tuổi</label>
-        <input type="number" class="form-control" id="age" name="age">
-    </div>
-
-
-
-
-
-
-
-    <button id="sendSearch" class="btn btn-success">Tìm kiếm</button>
-    <br />
-    <br />
-    <div id="tableList">
-        @{Html.RenderAction("_GetList", "Home");}
-    </div>
-</div>
 @section scripts{
     <script>
+        //validate
+        $("#form-search").validate({
+            rules: {
+                addressVal: {
+
+                    maxlength: 250,
+                },
+                nameVal: {
+
+                    maxlength: 250
+                },
+                ageVal: {
+                    min: 1,
+                    max: 100
+                },
+
+
+            },
+            messages: {
+                addressVal: {
+
+                    maxlength: "Không nhập quá 250 ký tự",
+                },
+                nameVal: {
+
+                    maxlength: "Không nhập quá 250 ký tự"
+                },
+                ageVal: {
+                    min: "Độ tuổi từ 1 -> 100",
+                    max: "Độ tuổi từ 1 -> 100",
+                    number: "Hãy nhập số"
+                },
+            }
+        });
+
+        let regular_date = /(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/;
+
+
+        //xử lý
         $(document).ready(function () {
             $("#typeSearch").change(function () {
                 let selectValue = $(this).val();
-                console.log(selectValue);
+                //console.log(selectValue);
                 $(".typeSearch").removeClass("show");
                 $(".typeSearch").addClass("hide");
                 $(`#${selectValue}`).removeClass("hide");
@@ -68,28 +118,58 @@
 
             });
 
+        });
+        let empGender = null;
+        $("input[name=gender]").click(function () {
+            empGender = $(this).val();
+            //console.log(genderVal)
+        });
+
+        $("#sendSearch").click(function (e) {
+            e.preventDefault();
+            let empName = $("input[name=nameVal]").val();
+            let startDate = $("input[name=startDate]").val();
+            let endDate = $("input[name=endDate]").val();
+            let empAddress = $("input[name=addressVal]").val();
+            let empAge = $("input[name=ageVal]").val();
+
+            if (!regular_date.test(startDate) || !regular_date.test(endDate)) {
+                $("#birthday> label.error").text("Định dạng không hợp lệ")
+            } else {
+                $("#birthday> label.error").text("")
+                $.ajax({
+                    type: "post",
+                    url: "/Home/_GetList",
+                    data: {
+                        empName: empName,
+                        startDate: startDate,
+                        endDate: endDate,
+                        empGender: empGender,
+                        empAddress: empAddress,
+                        empAge: empAge,
+                    },
+                    success: function (response) {
+
+                        console.log(response)
+                        $("#tableList").html(response)
+                    },
+                    error: function (xhr) {
+                        console.log(xhr);
+                    }
+                })
+            }
+
+            //let endDate = $("#endDate").val();
 
 
         });
-        $("#sendSearch").click(function () {
-            let empName = $("#inputName").val();
+        $("#addList").click(function () {
 
-            $.ajax({
-                type: "post",
-                url: "/Home/_GetList",
-                data: { empName: empName },                
-                success: function (response) {
-                    
-                    console.log(response)
-                    alert("aaa")
-                },
-                error: function (request, status) {
-                    console.log(request)
-                    console.log(status)
-                    
+            let htmlRow = $(".row-list").html();
+            console.log(htmlRow);
+            $("#tableList tbody").append(`<tr class="row-add">${htmlRow}</tr>`)
+            $(".row-add td").attr("contenteditable", "true");
 
-                },
-            })
         });
     </script>
 }

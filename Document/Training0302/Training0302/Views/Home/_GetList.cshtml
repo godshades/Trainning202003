@@ -24,31 +24,32 @@
 
             @foreach (var item in Model)
             {
-                <tr id="row-@item.ID">
-                    <td contenteditable="false">@item.ID</td>
-                    <td contenteditable="false">@item.NAME</td>
-                    <td contenteditable="false">@item.BIRTHDAY</td>
-                    <td contenteditable="false">@(item.GENDER == true ? "Nam" : "Nữ")</td>
-                    <td contenteditable="false">@item.ADDRESS</td>
-                    <td contenteditable="false">@item.EMAIL</td>
-                    <td contenteditable="false">@item.PHONE</td>
-                    <td><button class="btn btn-primary">Sửa</button><br /><br />
-                    <button class="btn btn-danger">Xóa</button></td>
+                <tr id="@item.ID.Trim()">
+                    <td class="td-id">@item.ID.Trim()</td>
+                    <td class="td-edit td-name">@item.NAME</td>
+                    <td class="td-edit td-birthday">@item.BIRTHDAY.ToString("dd/MM/yyyy")</td>
+                    <td class="td-edit td-gender">@(item.GENDER == true ? "Nam" : "Nữ")</td>
+                    <td class="td-edit td-address">@item.ADDRESS</td>
+                    <td class="td-edit td-email">@item.EMAIL</td>
+                    <td class="td-edit td-phone">@item.PHONE</td>
+                    <td>
+                        <button class="btn btn-primary editList" data-id="@item.ID.Trim()">Sửa</button>
+                        <button class="btn btn-danger">Xóa</button>
+                    </td>
 
                 </tr>
 
 
             }
             <tr class="row-list hide">
-                <td contenteditable="false" class="td-id"></td> 
-                <td contenteditable="false" class="td-name"></td>
-                <td contenteditable="false" class="td-birthday"></td>
-                <td contenteditable="false" class="td-gender"></td>
-                <td contenteditable="false" class="td-address"></td>
-                <td contenteditable="false" class="td-email"></td>
-                <td contenteditable="false" class="td-phone"></td>
-                <td><button class="btn btn-primary">Sửa</button><br /><br />
-                <button class="btn btn-danger">Xóa</button></td>
+                <td class="td-edit td-id"></td>
+                <td class="td-edit td-name"></td>
+                <td class="td-edit td-birthday"></td>
+                <td class="td-edit td-gender"></td>
+                <td class="td-edit td-address"></td>
+                <td class="td-edit td-email"></td>
+                <td class="td-edit td-phone"></td>
+                <td><button class="btn btn-danger">Xóa</button></td>
             </tr>
 
 

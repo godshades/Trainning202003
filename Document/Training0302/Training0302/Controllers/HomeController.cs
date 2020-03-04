@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Training0302.Dao;
+using Training0302.Models;
 
 namespace Training0302.Controllers
 {
@@ -41,10 +42,40 @@ namespace Training0302.Controllers
                 model = dao.ListByAge(empAge);
             }
 
+
             return PartialView("_GetList", model);
         }
-
-
+        [HttpPost]
+        public ActionResult AddEmployee(EMPLOYEE data, string gender)
+        {
+            if (gender == "NAM")
+            {
+                data.GENDER = true;
+            }
+            else data.GENDER = false;
+            bool result = new EmployeeDao().AddEmployee(data);
+            if (result)
+            {
+             //   
+            }
+            
+            return PartialView("_GetList", new EmployeeDao().ListAll());
+        }
+        [HttpPost]
+        public ActionResult EditEmployee(EMPLOYEE data, string gender)
+        {
+            if (gender == "NAM")
+            {
+                data.GENDER = true;
+            }
+            else data.GENDER = false;
+            bool result = new EmployeeDao().EditEmployee(data);
+            if (result)
+            {
+                //   
+            }
+            return PartialView("_GetList", new EmployeeDao().ListAll());
+        }
 
     }
 }

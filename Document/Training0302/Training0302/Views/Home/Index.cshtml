@@ -6,66 +6,66 @@
 }
 
 
-    <div class="container">
-        <br />
+<div class="container">
+    <br />
 
-        <div class="form-group">
-            <label for="Loại tìm kiếm">Loại tìm kiếm</label>
-            <select class="form-control" id="typeSearch">
-                <option value="name">Họ tên</option>
-                <option value="birthday">Ngày sinh</option>
-                <option value="gender">Giới tính</option>
-                <option value="address">Địa chỉ</option>
-                <option value="age">Tuổi</option>
-            </select>
-        </div>
-
-        <form id="form-search" action="#">
-            <div class="form-group show typeSearch" id="name">
-                <label for="name">Họ tên</label>
-                <input type="text" class="form-control" name="nameVal">
-            </div>
-            <div class="form-group hide typeSearch" id="birthday">
-                <label class="error"></label>
-                <br />
-                <label for="startDate">Từ ngày</label>
-                <input type="text" class="form-control" name="startDate" placeholder="dd/MM/yyyy">
-                <br />
-                <label for="endDate">đến ngày</label>
-                <input type="text" class="form-control" name="endDate" placeholder="dd/MM/yyyy">
-            </div>
-            <div class="radio hide typeSearch" id="gender">
-                <label><input type="radio" name="gender" value="true" checked>Nam</label>
-                <label><input type="radio" name="gender" value="false">Nữ</label>
-            </div>
-            <div class="form-group hide typeSearch" id="address">
-                <label for="address">Địa chỉ</label>
-                <input type="text" class="form-control" name="addressVal">
-            </div>
-            <div class="form-group hide typeSearch" id="age">
-                <label for="age">Tuổi</label>
-                <input type="number" class="form-control" name="ageVal">
-            </div>
-            <input type="submit" id="sendSearch" class="btn btn-success" value="Tìm kiếm" />
-        </form>
-        <br />
-        <button class="btn btn-success" id="addList">Thêm</button>
-        <button class="btn btn-success">Lưu</button>
-
-
-
-
-
-
-
-
-
-        <br />
-        <br />
-        <div id="tableList">
-            @{Html.RenderAction("_GetList", "Home");}
-        </div>
+    <div class="form-group">
+        <label for="Loại tìm kiếm">Loại tìm kiếm</label>
+        <select class="form-control" id="typeSearch">
+            <option value="name">Họ tên</option>
+            <option value="birthday">Ngày sinh</option>
+            <option value="gender">Giới tính</option>
+            <option value="address">Địa chỉ</option>
+            <option value="age">Tuổi</option>
+        </select>
     </div>
+
+    <form id="form-search" action="#">
+        <div class="form-group show typeSearch" id="name">
+            <label for="name">Họ tên</label>
+            <input type="text" class="form-control" name="nameVal">
+        </div>
+        <div class="form-group hide typeSearch" id="birthday">
+            <label class="error"></label>
+            <br />
+            <label for="startDate">Từ ngày</label>
+            <input type="text" class="form-control" name="startDate" placeholder="dd/MM/yyyy">
+            <br />
+            <label for="endDate">đến ngày</label>
+            <input type="text" class="form-control" name="endDate" placeholder="dd/MM/yyyy">
+        </div>
+        <div class="radio hide typeSearch" id="gender">
+            <label><input type="radio" name="gender" checked>Nam</label>
+            <label><input type="radio" name="gender">Nữ</label>
+        </div>
+        <div class="form-group hide typeSearch" id="address">
+            <label for="address">Địa chỉ</label>
+            <input type="text" class="form-control" name="addressVal">
+        </div>
+        <div class="form-group hide typeSearch" id="age">
+            <label for="age">Tuổi</label>
+            <input type="number" class="form-control" name="ageVal">
+        </div>
+        <input type="submit" id="sendSearch" class="btn btn-success" value="Tìm kiếm" />
+    </form>
+    <br />
+    <button class="btn btn-success" id="addList">Thêm</button>
+    <button class="btn btn-success" id="saveList">Lưu</button>
+
+
+
+
+
+
+
+
+
+    <br />
+    <br />
+    <div id="tableList">
+        @{Html.RenderAction("_GetList", "Home");}
+    </div>
+</div>
 @section scripts{
     <script>
         //validate
@@ -103,39 +103,40 @@
             }
         });
 
-        let regular_date = /(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/;
+
 
 
         //xử lý
-        $(document).ready(function () {
-            $("#typeSearch").change(function () {
-                let selectValue = $(this).val();
-                //console.log(selectValue);
-                $(".typeSearch").removeClass("show");
-                $(".typeSearch").addClass("hide");
-                $(`#${selectValue}`).removeClass("hide");
-                $(`#${selectValue}`).addClass("show");
 
-            });
+        let regular_date = /(((0|1)[0-9]|2[0-9]|3[0-1])\/(0[1-9]|1[0-2])\/((19|20)\d\d))$/;
+        $("#typeSearch").change(function () {
+            $(".typeSearch input").val("");
+            let selectValue = $(this).val();
+            //console.log(selectValue);
+            $(".typeSearch").removeClass("show");
+            $(".typeSearch").addClass("hide");
+            $(`#${selectValue}`).removeClass("hide");
+            $(`#${selectValue}`).addClass("show");
 
         });
-        let empGender = null;
-        $("input[name=gender]").click(function () {
-            empGender = $(this).val();
-            //console.log(genderVal)
-        });
+        let empGender
+        $("#gender>label").click(function () {
+            let textGender = $(this).text();
+            //console.log(textGender)
+            if (textGender == "Nam") {
+                empGender = true;
+            } else empGender = false;
 
-        $("#sendSearch").click(function (e) {
-            e.preventDefault();
+            //console.log(empGender)
+        });
+        function search() {
             let empName = $("input[name=nameVal]").val();
             let startDate = $("input[name=startDate]").val();
             let endDate = $("input[name=endDate]").val();
             let empAddress = $("input[name=addressVal]").val();
             let empAge = $("input[name=ageVal]").val();
 
-            if (!regular_date.test(startDate) || !regular_date.test(endDate)) {
-                $("#birthday> label.error").text("Định dạng không hợp lệ")
-            } else {
+            if (regular_date.test(startDate) && regular_date.test(endDate) || startDate == "" && endDate == "") {
                 $("#birthday> label.error").text("")
                 $.ajax({
                     type: "post",
@@ -150,26 +151,166 @@
                     },
                     success: function (response) {
 
-                        console.log(response)
+                        //console.log(response)
                         $("#tableList").html(response)
                     },
                     error: function (xhr) {
                         console.log(xhr);
                     }
                 })
+            } else {
+                $("#birthday> label.error").text("Định dạng không hợp lệ")
+
+            }
+        }
+        $("#sendSearch").click(function (e) {
+            e.preventDefault();
+            search();
+
+
+        });
+        //Thêm
+        $("#addList").click(function () {
+            if ($(".row-add").length >= 1) {
+                alert("Vui lòng nhập vào ô trống");
+            } else {
+                let htmlRow = $(".row-list").html();
+                //console.log(htmlRow);
+                $("#tableList tbody").append(`<tr class="row-add">${htmlRow}</tr>`)
+                $(".row-add .td-edit").attr("contenteditable", "true");
             }
 
-            //let endDate = $("#endDate").val();
-
-
         });
-        $("#addList").click(function () {
+        //------------------------
+        function addEmp() {
+            // Lấy giá trị nhập
+            let tdId = $(".td-id").text();
+            let tdName = $(".td-name").text();
+            let tdBirthday = $(".td-birthday").text();
+            let tdGender = $(".td-gender").text().toUpperCase();
+            let tdAddress = $(".td-address").text();
+            let tdEmail = $(".td-email").text();
+            let tdPhone = $(".td-phone").text();
+            //----------------
+            if (tdId == "" || tdName == "" || tdBirthday == "" || tdGender == "" || tdAddress == "" || tdEmail == "" || tdPhone == "") {
+                alert("Vui lòng nhập đầy đủ thông tin");
+            }
+            else {
 
-            let htmlRow = $(".row-list").html();
-            console.log(htmlRow);
-            $("#tableList tbody").append(`<tr class="row-add">${htmlRow}</tr>`)
-            $(".row-add td").attr("contenteditable", "true");
+                //convert date :
+                let dateArray = tdBirthday.split("/");
+                let newTdBirthday = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+                //---------
 
+                //convert gender :
+
+                let data = {
+                    ID: tdId,
+                    NAME: tdName,
+                    BIRTHDAY: newTdBirthday,
+                    ADDRESS: tdAddress,
+                    EMAIL: tdEmail,
+                    PHONE: tdPhone,
+                }
+                //-------------
+                $.ajax({
+                    url: 'Home/AddEmployee',
+                    type: 'POST',
+                    data: {
+                        data: data,
+                        gender: tdGender
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        $("#tableList").html(res)
+                    },
+                    error: function (e) {
+                        console.log(e.message);
+                    }
+                });
+            }
+
+        }
+
+        //Lưu
+
+        //-----------------------------------
+
+
+        //Sửa
+        let tdId;
+        let tdName;
+        let tdBirthday;
+        let tdGender;
+        let tdAddress;
+        let tdEmail;
+        let tdPhone;
+        $(".editList").click(function () {
+            let dataId = $(this).data("id");
+            console.log(dataId)
+            $(`#${dataId}>.td-edit`).attr("contenteditable", "true");
+            tdId = dataId;
+            tdName = $(`#${dataId}>.td-name`).text();
+            tdBirthday = $(`#${dataId}>.td-birthday`).text();
+            tdGender = $(`#${dataId}>.td-gender`).text().toUpperCase();
+            tdAddress = $(`#${dataId}>.td-address`).text();
+            tdEmail = $(`#${dataId}>.td-email`).text();
+            tdPhone = $(`#${dataId}>.td-phone`).text();
         });
+
+        function editEmp() {
+
+            if (tdId == "" || tdName == "" || tdBirthday == "" || tdGender == "" || tdAddress == "" || tdEmail == "" || tdPhone == "") {
+                alert("Vui lòng nhập đầy đủ thông tin");
+            }
+            else {
+
+                //convert date :
+                let dateArray = tdBirthday.split("/");
+                let newTdBirthday = dateArray[1] + "/" + dateArray[0] + "/" + dateArray[2];
+                //---------
+                //convert gender :
+
+                let data = {
+                    ID: tdId,
+                    NAME: tdName,
+                    BIRTHDAY: newTdBirthday,
+                    ADDRESS: tdAddress,
+                    EMAIL: tdEmail,
+                    PHONE: tdPhone,
+                }
+                console.log(data)
+                //-------------
+                $.ajax({
+                    url: 'Home/EditEmployee',
+                    type: 'POST',
+                    data: {
+                        data: data,
+                        gender: tdGender
+                    },
+                    success: function (res) {
+                        console.log(res)
+                        $("#tableList").html(res)
+                    },
+                    error: function (e) {
+                        console.log(e.message);
+                    }
+                });
+            }
+        }
+
+        //-----------------------------
+
+        $("#saveList").click(function () {
+            if ($(".row-add").length = 1) {
+                addEmp();
+            } else editEmp();
+
+
+        })
+
+
+
+
     </script>
 }

@@ -20,10 +20,10 @@ namespace Training0302.Dao
         }
         public List<EMPLOYEE> ListByBirthday(string startDate, string endDate)
         {
-            
-            DateTime startdate =  DateTime.ParseExact(startDate,"dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            DateTime startdate = DateTime.ParseExact(startDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime enddate = DateTime.ParseExact(endDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            return db.EMPLOYEEs.Where(x => x.BIRTHDAY  > startdate && x.BIRTHDAY < enddate).OrderBy(x => x.ID).ToList();
+            return db.EMPLOYEEs.Where(x => x.BIRTHDAY > startdate && x.BIRTHDAY < enddate).OrderBy(x => x.ID).ToList();
 
         }
         public List<EMPLOYEE> ListByGender(string empGender)
@@ -44,8 +44,44 @@ namespace Training0302.Dao
         public List<EMPLOYEE> ListByAge(string empAge)
         {
             int empage = int.Parse(empAge);
-            return db.EMPLOYEEs.Where(x =>(DateTime.Now.Year - x.BIRTHDAY.Year) == empage).OrderBy(x => x.ID).ToList();
+            return db.EMPLOYEEs.Where(x => (DateTime.Now.Year - x.BIRTHDAY.Year) == empage).OrderBy(x => x.ID).ToList();
 
+        }
+        public bool AddEmployee(EMPLOYEE data)
+        {
+            try
+            {
+                data.STATUS = true;
+                db.EMPLOYEEs.Add(data);
+                db.SaveChanges();
+                return true;
+
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        public bool EditEmployee(EMPLOYEE data)
+        {
+            EMPLOYEE model = db.EMPLOYEEs.Find(data.ID);
+            try
+            {
+                model.NAME = data.NAME;
+                model.BIRTHDAY = data.BIRTHDAY;
+                model.EMAIL = data.EMAIL;
+                model.ADDRESS = data.ADDRESS;
+                model.GENDER = data.GENDER;
+                model.PHONE = data.PHONE;
+                db.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+
+                return false;
+            }
+            
         }
 
 

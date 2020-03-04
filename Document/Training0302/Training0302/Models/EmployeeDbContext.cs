@@ -16,13 +16,6 @@ namespace Training0302.Models
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<EMPLOYEE>()
-                .Property(e => e.ID)
-                .IsFixedLength();
-
-            modelBuilder.Entity<EMPLOYEE>()
-                .Property(e => e.PHONE)
-                .IsFixedLength();
         }
     }
 }

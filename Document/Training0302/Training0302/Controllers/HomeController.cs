@@ -76,6 +76,19 @@ namespace Training0302.Controllers
             }
             return PartialView("_GetList", new EmployeeDao().ListAll());
         }
+        public ActionResult DeleteEmployee(string deleteId)
+        {
+            if (!string.IsNullOrEmpty(deleteId))
+            {
+               bool result = new EmployeeDao().DeleteEmployee(deleteId);
+                if (result)
+                {
+                    //
+                }
+            }
+            
+            return View("Index");
+        }
 
     }
 }

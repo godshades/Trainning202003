@@ -23,7 +23,7 @@ namespace Training0302.Dao
 
             DateTime startdate = DateTime.ParseExact(startDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
             DateTime enddate = DateTime.ParseExact(endDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-            return db.EMPLOYEEs.Where(x => x.BIRTHDAY > startdate && x.BIRTHDAY < enddate).OrderBy(x => x.ID).ToList();
+            return db.EMPLOYEEs.Where(x => x.BIRTHDAY >= startdate && x.BIRTHDAY <= enddate).OrderBy(x => x.ID).ToList();
 
         }
         public List<EMPLOYEE> ListByGender(string empGender)
@@ -77,6 +77,23 @@ namespace Training0302.Dao
                 return true;
             }
             catch (Exception)
+            {
+
+                return false;
+            }
+            
+        }
+        public bool DeleteEmployee(string deleteId)
+        {
+            try
+            {
+                var model = db.EMPLOYEEs;
+                var Emp = model.Find(deleteId);
+                Emp.STATUS = false;
+                db.SaveChanges();
+                return true;
+            }
+            catch
             {
 
                 return false;

@@ -27,14 +27,14 @@
                 <tr id="@item.ID.Trim()">
                     <td class="td-id">@item.ID.Trim()</td>
                     <td class="td-edit td-name">@item.NAME</td>
-                    <td class="td-edit td-birthday">@item.BIRTHDAY.ToString("dd/MM/yyyy")</td>
+                    <td class="td-edit td-birthday format-date">@item.BIRTHDAY.ToString("dd/MM/yyyy")</td>
                     <td class="td-edit td-gender">@(item.GENDER == true ? "Nam" : "Nữ")</td>
                     <td class="td-edit td-address">@item.ADDRESS</td>
                     <td class="td-edit td-email">@item.EMAIL</td>
                     <td class="td-edit td-phone">@item.PHONE</td>
                     <td>
                         <button class="btn btn-primary editList" data-id="@item.ID.Trim()">Sửa</button>
-                        <button class="btn btn-danger">Xóa</button>
+                        <button class="btn btn-danger deleteList" data-id="@item.ID.Trim()">Xóa</button>
                     </td>
 
                 </tr>
@@ -49,7 +49,7 @@
                 <td class="td-edit td-address"></td>
                 <td class="td-edit td-email"></td>
                 <td class="td-edit td-phone"></td>
-                <td><button class="btn btn-danger">Xóa</button></td>
+                <td><button class="btn btn-danger deleteList" data-id="row-delete">Xóa</button></td>
             </tr>
 
 

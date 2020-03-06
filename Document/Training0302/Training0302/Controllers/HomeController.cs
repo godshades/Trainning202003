@@ -48,7 +48,7 @@ namespace Training0302.Controllers
         [HttpPost]
         public ActionResult AddEmployee(EMPLOYEE data, string gender)
         {
-            if (gender == "NAM")
+            if (gender == "true")
             {
                 data.GENDER = true;
             }
@@ -64,7 +64,7 @@ namespace Training0302.Controllers
         [HttpPost]
         public ActionResult EditEmployee(EMPLOYEE data, string gender)
         {
-            if (gender == "NAM")
+            if (gender == "true")
             {
                 data.GENDER = true;
             }

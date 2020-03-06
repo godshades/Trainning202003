@@ -51,10 +51,15 @@ namespace Training0302.Dao
         {
             try
             {
-                data.STATUS = true;
-                db.EMPLOYEEs.Add(data);
-                db.SaveChanges();
-                return true;
+                if (db.EMPLOYEEs.Find(data.ID) == null)
+                {
+                    data.STATUS = true;
+                    db.EMPLOYEEs.Add(data);
+                    db.SaveChanges();
+                    return true;
+                }
+                else return false;
+                
 
             }
             catch

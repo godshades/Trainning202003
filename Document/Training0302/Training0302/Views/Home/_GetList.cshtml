@@ -27,8 +27,8 @@
                 <tr id="@item.ID.Trim()">
                     <td class="td-id">@item.ID.Trim()</td>
                     <td class="td-edit td-name">@item.NAME</td>
-                    <td class="td-edit td-birthday format-date">@item.BIRTHDAY.ToString("dd/MM/yyyy")</td>
-                    <td class="td-edit td-gender">@(item.GENDER == true ? "Nam" : "Nữ")</td>
+                    <td class="td-edit td-birthday js-format-date" data-date="@item.BIRTHDAY.ToString("dd/MM/yyyy")">@item.BIRTHDAY.ToString("dd/MM/yyyy")</td>
+                    <td class="td-edit td-gender"><span>@(item.GENDER == true ? "Nam" : "Nữ")</span><div></div></td>
                     <td class="td-edit td-address">@item.ADDRESS</td>
                     <td class="td-edit td-email">@item.EMAIL</td>
                     <td class="td-edit td-phone">@item.PHONE</td>
@@ -44,8 +44,8 @@
             <tr class="row-list hide">
                 <td class="td-edit td-id"></td>
                 <td class="td-edit td-name"></td>
-                <td class="td-edit td-birthday"></td>
-                <td class="td-edit td-gender"></td>
+                <td class="td-edit td-birthday js-format-date"></td>
+                <td class="td-edit td-gender"><span></span><div></div></td>
                 <td class="td-edit td-address"></td>
                 <td class="td-edit td-email"></td>
                 <td class="td-edit td-phone"></td>
